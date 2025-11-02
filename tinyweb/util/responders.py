@@ -1,5 +1,6 @@
 import sys, rel, traceback
 from urllib.parse import unquote
+from fyg.util import basiclog as log
 from .converters import enc, dec, rec_conv, processResponse
 from .setters import local
 from .loaders import cgi_load
@@ -93,7 +94,7 @@ def fail(data="failed", html=False, err=None, noenc=False, exit=True):
     if err:
         # log it
         logdata = "%s --- %s --> %s"%(data, repr(err), traceback.format_exc())
-        log(logdata, "error")
+        log("error:", logdata)
         if DEBUG:
             # write it
             data = logdata

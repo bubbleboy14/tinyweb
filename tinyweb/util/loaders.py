@@ -1,6 +1,7 @@
 import json, cgi, ast, sys
 from urllib.parse import unquote
 from .setters import local, localvars
+from ..config import config
 
 def qs_get(x, y):
     val = localvars.request.getvalue(x, y)
