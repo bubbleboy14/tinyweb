@@ -1,4 +1,6 @@
 import os
+from dez.http.server.shield import Shield
+from fyg.util import read, write
 from .logger import logger_getter
 from .config import config
 
@@ -18,6 +20,17 @@ class PaperShield(object):
 	def ip(self, ip):
 		return self.ips.get(ip, self.default)
 
+def setShield(blup=None):
+	shield = None
+	shfg = config.web.shield
+	if shfg: # web/admin share shield and blacklist
+		setBlacklist()
+		shield = Shield(config.web.blacklist, logger_getter, blup or writeBlacklist,
+			getattr(shfg, "limit", 400),
+			getattr(shfg, "interval", 2))
+	config.web.update("shield", shield or PaperShield())
+	return shield
+
 def setBlacklist():
 	bl = {}
 	for preban in config.web.blacklist:
@@ -31,3 +44,10 @@ def setBlacklist():
 				bsaved[line.strip()] = "legacy ban"
 		bsaved and bl.update(bsaved)
 	config.web.update("blacklist", bl)
+
+def writeBlacklist():
+	wcfg = config.web
+	bl = wcfg.blacklist.obj()
+	write(bl, "black.list", isjson=True)
+	wcfg.blacklister and wcfg.blacklister.update(bl)
+	return len(bl.keys())

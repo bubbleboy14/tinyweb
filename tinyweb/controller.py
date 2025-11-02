@@ -1,8 +1,6 @@
 import os, sys, platform
-from fyg.util import read, write
 from dez.network import SocketController, daemon_wrapper
-from dez.http.server.shield import Shield
-from .shield import PaperShield, setBlacklist
+from .shield import setShield, writeBlacklist
 from .logger import logger_getter
 from .response import Response
 from .daemons import webs
@@ -54,17 +52,13 @@ class Controller(SocketController):
 		self.handlers[rule](req and Response(req) or option)
 
 	def blup(self):
-		wcfg = config.web
-		bl = wcfg.blacklist.obj()
-		blen = len(bl.keys())
-		self.logger.warn("saving %s IPs in black.list"%(blen,))
-		write(bl, "black.list", isjson=True)
-		if wcfg.report and self.blcount != blen:
+		blen = writeBlacklist()
+		self.logger.warn("saved %s IPs in black.list"%(blen,))
+		if self.blcount != blen:
 			self.blcount = blen
-			if not blen % self.blchunk:
+			if config.web.report and not blen % self.blchunk:
 				from .mail import email_admins
 				email_admins("sketch IPs blacklisted", "sketch count: %s"%(blen,))
-		wcfg.blacklister and wcfg.blacklister.update(bl)
 
 	def web(self, name, cfg, daemon, shield):
 		self.webs[name] = self.register_address(cfg.host,
@@ -76,15 +70,7 @@ def getController():
 	if not CTR:
 		# controller
 		CTR = Controller()
-
-		shield = None
-		shfg = config.web.shield
-		if shfg: # web/admin share shield and blacklist
-			setBlacklist()
-			shield = Shield(config.web.blacklist, logger_getter, CTR.blup,
-				getattr(shfg, "limit", 400),
-				getattr(shfg, "interval", 2))
-		config.web.update("shield", shield or PaperShield())
+		shield = setShield(CTR.blup)
 		mempad = config.mempad
 
 		for web in webs:
@@ -95,8 +81,8 @@ def getController():
 
 	return CTR
 
-def dweb():
-	return getController().webs["web"]
+def dweb(wname="web"):
+	return getController().webs.get(wname)
 
 def respond(*args, **kwargs):
 	getController().register_handler(args, kwargs)
