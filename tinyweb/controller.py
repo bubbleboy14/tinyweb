@@ -20,7 +20,7 @@ class Controller(SocketController):
 		self.webs = {}
 		self.blcount = 0
 		self.blchunk = getattr(config.web.shield, "chunk", 5)
-		self.logger.info("tinyweb: %s"%(__version__,))
+		self.logger.info("babyweb: %s"%(__version__,))
 		self.logger.info("Python: %s"%(sys.version.split(' ')[0],))
 		self.logger.info("System: " + " > ".join([part for part in platform.uname() if part]))
 

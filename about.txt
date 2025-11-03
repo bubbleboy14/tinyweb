@@ -1,1 +1,1 @@
-ThINlY WrappEd weB
+Basic Asynchronous weB librarY

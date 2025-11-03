@@ -1,5 +1,5 @@
-# tinyweb
+# babyweb
 
-ThINlY WrappEd weB
+Basic Asynchronous weB librarY
 
 v0.1.0

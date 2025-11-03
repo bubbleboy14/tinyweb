@@ -1,16 +1,16 @@
 from setuptools import setup
 
 setup(
-    name='tinyweb',
+    name='babyweb',
     version="0.1.0",
     author='Mario Balibrera',
     author_email='mario.balibrera@gmail.com',
     license='MIT License',
-    description='ThINlY WrappEd weB',
+    description='Basic Asynchronous weB librarY',
     long_description='repackages async dez components like HTTPApplication and SocketController into a minimalist config-driven web (backend) framework',
     packages=[
-        'tinyweb',
-        'tinyweb.util'
+        'babyweb',
+        'babyweb.util'
     ],
     zip_safe = False,
     install_requires = [
