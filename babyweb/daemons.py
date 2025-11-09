@@ -42,4 +42,7 @@ def addWeb(name, daemon, cfg):
     else:
         config.webs.update(name, cfg)
 
-addWeb("web", Web, config.web)
+def initWebs(extras={}):
+    addWeb("web", Web, config.web)
+    for web, cfg in extras.items():
+        addWeb(web, cfg["daemon"], cfg["config"])
