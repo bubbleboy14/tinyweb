@@ -1,4 +1,4 @@
-import json, cgi, ast, sys
+import json, ast, sys
 from base64 import b64decode
 from urllib.parse import unquote
 from .setters import local, localvars
@@ -21,17 +21,13 @@ def cgi_load():
     localvars.request_string = cgi_read()
     data = config.encode and dec(localvars.request_string) or localvars.request_string
     try:
-        try:
-            jdata = json.loads(data)
-        except:
-            jdata = ast.literal_eval(data)
-        try:
-            localvars.request = rec_conv(jdata, True)
-        except:
-            localvars.request = jdata
+        jdata = json.loads(data)
     except:
-        localvars.request = cgi.FieldStorage()
-        setattr(localvars.request, "get", qs_get)
+        jdata = ast.literal_eval(data)
+    try:
+        localvars.request = rec_conv(jdata, True)
+    except:
+        localvars.request = jdata
     if not localvars.request:
         localvars.request = {}
 
