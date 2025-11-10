@@ -2,4 +2,4 @@
 
 Basic Asynchronous weB librarY
 
-v0.1.1.3
+v0.1.1.4
