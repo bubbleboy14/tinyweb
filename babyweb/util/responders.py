@@ -175,7 +175,7 @@ def fail(data="failed", html=False, err=None, noenc=False, exit=True):
                         shield.suss(ip, reason)
                         log(logline)
         if config.web.report:
-            from .mail import email_admins
+            from ..mail import email_admins
             email_admins("error encountered", edump)
     _header("Content-Type", "text/%s"%(html and "html" or "plain"))
     draw = processResponse(data, "0")
