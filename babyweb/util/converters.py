@@ -1,7 +1,6 @@
 import json
 from urllib.parse import quote, unquote
 from base64 import b64encode, b64decode
-from six import string_types
 from ..config import config
 
 _c = config.scrambler
@@ -43,7 +42,7 @@ def rec_conv(data, de=False):
             data = data.decode()
         except:
             pass
-    if isinstance(data, string_types):
+    if isinstance(data, str):
         return (de and rdec or renc)(data)
     elif isinstance(data, dict):
         for k, v in list(data.items()):
