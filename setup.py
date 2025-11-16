@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='babyweb',
-    version="0.1.1.5",
+    version="0.1.1.6",
     author='Mario Balibrera',
     author_email='mario.balibrera@gmail.com',
     license='MIT License',
