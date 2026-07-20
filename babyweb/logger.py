@@ -3,9 +3,14 @@ from fyg.util import log as syslog
 from dez.logging import get_logger_getter
 from .config import config
 
-logger_getter = get_logger_getter("httpd", syslog, config.log.allow)
-
+_LG = None
 _LOG = None
+
+def logger_getter(name):
+	global _LG
+	if not _LG:
+		_LG = get_logger_getter("httpd", syslog, config.log.allow)
+	return _LG(name)
 
 def setlog(f):
     global _LOG
