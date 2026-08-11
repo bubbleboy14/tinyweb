@@ -10,6 +10,8 @@ catfyg.set({
 	"verbose": mfg.verbose,
 	"cache": config.cache
 })
+catfyg.throttler.update("active", mfg.throttler.active)
+catfyg.throttler.update("period", mfg.throttler.period)
 catfyg.admin.update("contacts", config.admin.contacts)
 catfyg.admin.update("reportees", config.admin.reportees)
 
