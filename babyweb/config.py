@@ -21,7 +21,11 @@ config = Config({
 		"html": True,
 		"gmailer": False,
 		"verbose": False,
-		"scantick": 2
+		"scantick": 2,
+		"throttler": {
+			"active": False,
+			"period": 600
+		}
 	},
 	"web": {
 		"domain": "your.web.domain",
