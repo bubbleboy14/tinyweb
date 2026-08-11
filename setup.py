@@ -14,8 +14,9 @@ setup(
     ],
     zip_safe = False,
     install_requires = [
-        "fyg >= 0.1.7.10",
+        "fyg >= 0.1.7.11",
         "dez >= 0.10.10.54",
+        "catmail >= 0.1.9.6",
         "requests >= 2.28.1"
     ],
     entry_points = '''''',
